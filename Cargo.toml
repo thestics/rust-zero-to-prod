@@ -1,0 +1,29 @@
+[package]
+name = "img_service"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "img_service"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+actix-web = "4"
+reqwest = "0.11.11"
+serde = { version = "1.0.144", features = ["derive"]}
+
+[dependencies.sqlx]
+version = "0.6"
+features = ["runtime-actix-rustls", "macros", "postgres", "uuid", "chrono", "migrate"]
+
+[dev-dependencies]
+cargo-tarpaulin = "*"
+cargo-watch = "*"
+cargo-audit = "*"
+cargo-expand = "*"
