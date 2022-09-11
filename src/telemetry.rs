@@ -1,8 +1,3 @@
-// use std::net::TcpListener;
-
-// use crate::startup::run;
-// use crate::configuration::get_configuration;
-// use sqlx::{Connection, PgPool};
 use tracing::{subscriber::set_global_default, Subscriber};
 use tracing_bunyan_formatter::{BunyanFormattingLayer, JsonStorageLayer};
 use tracing_subscriber::{layer::SubscriberExt, EnvFilter, Registry, fmt::MakeWriter};
