@@ -86,6 +86,26 @@ async fn check_health_check() {
 }
 
 #[tokio::test]
+async fn subscribe_returns_200_when_data_is_valid() {
+    let app = spawn_app().await;
+    let client = reqwest::Client::new();
+    let response = client
+        .post(&format!("{}/subscribe", &app.address))
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .body("name=Ursula&email=ursula_le_guin%40gmail.com")
+        .send()
+        .await
+        .expect("Failed to exec req");
+
+    let saved = sqlx::query!("SELECT email, name FROM subscriptions",)
+        .fetch_one(&app.db_pool)
+        .await
+        .expect("Failed to fetch saved subscriptions");
+
+    assert_eq!(saved.email, "ursula_le_guin@gmail.com");
+}
+
+#[tokio::test]
 async fn subscribe_returns_400_when_fields_present_but_invalid() {
     let app = spawn_app().await;
     let client = reqwest::Client::new();
@@ -108,12 +128,12 @@ async fn subscribe_returns_400_when_fields_present_but_invalid() {
         assert_eq!(400, response.status().as_u16(), "The API did not return a 200 OK when the payload was {}", description);
     }
 
-    let saved = sqlx::query!("SELECT email, name FROM subscriptions",)
-        .fetch_one(&app.db_pool)
-        .await
-        .expect("Failed to fetch saved subscriptions");
+    // let saved = sqlx::query!("SELECT email, name FROM subscriptions",)
+    //     .fetch_one(&app.db_pool)
+    //     .await
+    //     .expect("Failed to fetch saved subscriptions");
 
-    assert_eq!(saved.email, "ursula_le_guin@gmail.com");
+    // assert_eq!(saved.email, "ursula_le_guin@gmail.com");
 }
 
 
