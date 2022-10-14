@@ -27,12 +27,15 @@ tracing-log = "0.1.3"
 secrecy = { version = "0.8", features = ["serde"]}
 tracing-actix-web = "0.6.0"
 serde-aux = "3"
+unicode-segmentation = "1.9.0"
+validator = "0.16.0"
 
 [dependencies.sqlx]
 version = "0.6"
 features = ["runtime-actix-rustls", "macros", "postgres", "uuid", "chrono", "migrate", "offline"]
 
 [dev-dependencies]
+claim = "0.5"
 once_cell = "1"
 cargo-tarpaulin = "*"
 cargo-watch = "*"
